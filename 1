@@ -1,0 +1,58 @@
+`function script.prepare(dt)
+    return ac.getCarState(1).speedKmh > 60
+end
+ 
+local screenSize = vec2(ac.getSim().windowWidth, ac.getSim().windowHeight)
+local imageWidth = 232
+local imageHeight = 108
+local imagex = -50
+local imagey = screenSize.y - imageHeight
+local FPSToggle = false
+local CPUToggle = false
+function script.drawUI()
+ 
+    FPS = ac.getSim().fps
+    if FPSToggle then
+        ui.text("FPS: " .. FPS)
+    end
+    CPU = ac.getSim().cpuOccupancy
+    if CPUToggle then
+        ui.newLine(1)
+        ui.text("CPU%: " .. CPU)
+    end
+    local logoURL = '' ..
+        ''
+ 
+    ui.drawImage(logoURL, vec2(imagex, imagey), vec2(imagex + imageWidth, imagey + imageHeight), rgbm.colors.white
+        ,
+        vec2(0, 0),
+        vec2(1, 1), false)
+end
+ 
+function Settings()
+    ui.text("Settings")
+    ui.childWindow("##SettingsMenu", vec2(ui.availableSpaceX(), ui.availableSpaceY()),
+        function()
+            if ui.checkbox("Show FPS", refbool(FPSToggle)) then
+                FPSToggle = not FPSToggle
+            end
+ 
+            if ui.checkbox("Show CPU", refbool(CPUToggle)) then
+                CPUToggle = not CPUToggle
+            end
+        end)
+end
+ 
+local function mainMenu()
+    ui.tabBar("Atabbar", function() --A TAB BAR
+        ui.tabItem("Psycho Team Settings", Settings)
+    end)
+end
+ 
+ui.registerOnlineExtra(ui.Icons.Settings,
+    "Psycho Team Settings",
+    nil,
+    mainMenu,
+    closeCallback,
+    ui.OnlineExtraFlags.Tool,
+    ui.WindowFlags.NoScrollWithMouse)`
