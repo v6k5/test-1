@@ -1,14 +1,11 @@
-WELCOME_MESSAGE:
-  ENABLED: true
-  MESSAGES:
-    - "A Way Team مرحبًا بك في السيرفر!"
-    - "منور ديسكوردنا: https://discord.gg/9-3"
-    - "اكتب /discord للحصول على الرابط مرة أخرى"
+function script.onPlayerConnect(playerId)
+    ac.sendChatMessage("Welcome to A-Way Team")
+    ac.sendChatMessage("Discord server: https://discord.gg/9-3")
+end
 
-EnablePlugins:
-  - CustomCommandPlugin
-
----
-!CustomCommandConfiguration
-Commands:
-  discord: "🌐 رابط الديسكورد: https://discord.gg/9-3"
+function script.onChatMessage(playerId, message)
+    if message == "/tp" or message == "/legal" or message == "/help" then
+        ac.sendChatMessage("أوامر غير مفعلة حالياً، تواصل معنا عبر الديسكورد.")
+        return true -- يمنع ظهور رسالة الخطأ الافتراضية
+    end
+end
